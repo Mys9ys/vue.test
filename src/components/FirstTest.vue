@@ -36,10 +36,18 @@
     ></li-item>
   </ol>
 
+<!--  <p-test :class="[isActive ? activeClass : '', errorClass]"></p-test>-->
+<!--  <div :class="{activeClass: isActive}">dfasfdasf</div>-->
+
+
+<!--  <div :class="[isActive ? activeClass : '']">svgs</div>-->
+<!--  <div :class="{activeClass: isActive}">svgs sssws</div>-->
+
 </template>
 
 <script>
 import LiItem from "@/components/LiItem";
+// import PTest from "@/components/PTest";
 
 export default {
   name: "FirstTest",
@@ -63,7 +71,9 @@ export default {
         { text: 'Vegetables' },
         { text: 'Cheese' },
         { text: 'Whatever else humans are supposed to eat' }
-      ]
+      ],
+
+      isActive: true
     }
   },
   methods: {
@@ -79,7 +89,8 @@ export default {
     }
   },
   components: {
-    LiItem
+    LiItem,
+    // PTest
   },
   mounted() {
     setInterval(() => {
@@ -91,5 +102,7 @@ export default {
 </script>
 
 <style scoped>
-
+  .activeClass{
+    color: red;
+  }
 </style>
