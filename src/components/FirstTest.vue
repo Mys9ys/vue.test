@@ -36,11 +36,13 @@
     ></li-item>
   </ol>
 
+  <div :class="classObject">gdsgdf</div>
+
 <!--  <p-test :class="[isActive ? activeClass : '', errorClass]"></p-test>-->
 <!--  <div :class="{activeClass: isActive}">dfasfdasf</div>-->
 
 
-<!--  <div :class="[isActive ? activeClass : '']">svgs</div>-->
+  <div :class="[isActive ? 'activeClass' : '']">svgs</div>
 <!--  <div :class="{activeClass: isActive}">svgs sssws</div>-->
 
 </template>
@@ -73,7 +75,8 @@ export default {
         { text: 'Whatever else humans are supposed to eat' }
       ],
 
-      isActive: true
+      isActive: true,
+      error: null
     }
   },
   methods: {
@@ -86,11 +89,20 @@ export default {
     changeSeen(){
       this.seen = !this.seen,
       this.seenBTNname = "Отобразить"
+      this.error = 'err'
     }
   },
   components: {
     LiItem,
     // PTest
+  },
+  computed: {
+    classObject() {
+      return {
+        active: this.isActive && !this.error,
+        'activeClass': this.error
+      }
+    }
   },
   mounted() {
     setInterval(() => {
