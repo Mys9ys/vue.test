@@ -1,4 +1,6 @@
 <template>
+
+  <video-test></video-test>
   <h1>{{ msg }}</h1>
 
   <div id="counter" >
@@ -45,10 +47,27 @@
   <div :class="[isActive ? 'activeClass' : '']">svgs</div>
 <!--  <div :class="{activeClass: isActive}">svgs sssws</div>-->
 
+  <input @keyup.enter="clickEnter" value="dasdw">
+
+  <br>
+
+  <input type="checkbox" id="jack" value="Джек" v-model.lazy="checkedNames" />
+  <label for="jack">Джек</label>
+  <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />
+  <label for="john">Джон</label>
+  <input type="checkbox" id="mike" value="Майк" v-model="checkedNames" />
+  <label for="mike">Майк</label>
+  <br />
+  <span>Отмеченные имена: {{ checkedNames }}</span>
+
+
+
+
 </template>
 
 <script>
 import LiItem from "@/components/LiItem";
+import VideoTest from "@/components/VideoTest";
 // import PTest from "@/components/PTest";
 
 export default {
@@ -76,7 +95,9 @@ export default {
       ],
 
       isActive: true,
-      error: null
+      error: null,
+
+      checkedNames: []
     }
   },
   methods: {
@@ -90,10 +111,14 @@ export default {
       this.seen = !this.seen,
       this.seenBTNname = "Отобразить"
       this.error = 'err'
+    },
+    clickEnter(){
+      alert('click enter')
     }
   },
   components: {
     LiItem,
+    VideoTest
     // PTest
   },
   computed: {
