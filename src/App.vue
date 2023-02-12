@@ -1,16 +1,18 @@
 <template>
 
 <!--  <HelloWorld msg="Welcome to Your Vue.js App"/>-->
-  <FirstTest msg="Test Message" />
+<!--  <FirstTest msg="Test Message" />-->
+  <video-test />
 </template>
 
 <script>
-import FirstTest from "@/components/FirstTest";
+
+import VideoTest from "@/components/VideoTest";
 
 export default {
   name: 'App',
   components: {
-    FirstTest
+    VideoTest
   }
 }
 </script>

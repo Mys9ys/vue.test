@@ -1,54 +1,43 @@
 <template>
   <div class="container">
-    <form class="form" @submit.prevent>
-      <h4>Создание поста</h4>
-      <input type="text"
-             :value="title"
-             @input="title = $event.target.value"
-             class="input"
-             placeholder="Название"
-      >
-      <input type="text"
-             :value="body"
-             @input="body = $event.target.value"
-             class="input"
-             placeholder="Описание"
-      >
-      <button @click="createPost">Создать</button>
-    </form>
-    <div class="post" v-for="(post, index) in news" :key="index">
-      <div><b>:</b>{{ post.title }}</div>
-      <div><b>:</b>{{ post.body }}</div>
-    </div>
+    <post-form
+        @create="createPost"
+    />
+    <post-list
+        :posts="posts"
+        @remove="removePost"
+    />
   </div>
 </template>
 
 <script>
+import PostList from "@/components/PostList";
+import PostForm from "@/components/PostForm";
+
 export default {
+  components: {
+    PostList,
+    PostForm
+  },
   name: "VideoTest",
 
   data() {
     return {
       title: '',
       body: '',
-
-      news: [
-        {title: "post", body: "body"},
-        {title: "post 1", body: "body 1"},
-        {title: "post 2", body: "body 2"}
+      posts: [
+        {id: 0, title: "post", body: "body"},
+        {id: 1, title: "post 1", body: "body 1"},
+        {id: 2, title: "post 2", body: "body 2"}
       ]
     }
   },
   methods: {
-    createPost(){
-      const newPost = {
-        title: this.title,
-        body: this.body
-      }
-      this.news.push(newPost)
-
-      this.title= this.body=''
-
+    createPost(post){
+      this.posts.push(post)
+    },
+    removePost(post){
+      this.posts = this.posts.filter(p => p.id !== post.id)
     }
   }
 }
@@ -59,15 +48,9 @@ export default {
   width: 400px;
   margin: 0 auto;
 }
-.form{
-  display: flex;
-  flex-direction: column;
+
+*{
+  box-sizing: border-box;
 }
 
-.post {
-  display: block;
-  padding: 10px 15px;
-  border: 2px solid teal;
-  margin-top: 10px;
-}
 </style>
