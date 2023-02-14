@@ -1,5 +1,5 @@
 <template>
-  <select v-model="modelValues" @change="changeOption">
+  <select :value="modelValue" @change="changeOption">
     <option disabled value="">Выберите из списка</option>
     <option
         v-for="option in options"
@@ -15,17 +15,18 @@
 export default {
   name: "my-select",
   props: {
-    modelValues: {
+    modelValue: {
       type: String
     },
     options: {
       type: Array,
       default: () => []
     },
-    methods: {
-      changeOption(option){
-        this.$emit('update:modelValue', option)
-      }
+
+  },methods: {
+    changeOption(event){
+      console.log(event.target.value)
+      this.$emit('update:modelValue', event.target.value)
     }
   }
 }
