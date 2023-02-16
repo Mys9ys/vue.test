@@ -1,23 +1,30 @@
 <template>
-
+  <NavBar></NavBar>
+<router-view></router-view>
 <!--  <HelloWorld msg="Welcome to Your Vue.js App"/>-->
 <!--  <FirstTest msg="Test Message" />-->
-  <video-test />
+<!--  <video-test />-->
 </template>
 
 <script>
 
-import VideoTest from "@/components/VideoTest";
+// import VideoTest from "@/components/VideoTest";
 
 export default {
   name: 'App',
   components: {
-    VideoTest
+    // VideoTest
   }
 }
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,10 +1,16 @@
 <template>
   <div class="post" >
     <div>
-      <div>{{post.id}}<b>название:</b> {{ post.title }}</div>
+      <div>{{post.id}}</div>
+      <div><b>название:</b> {{ post.title }}</div>
       <div><b>описание:</b> {{ post.body }}</div>
     </div>
     <div class="post__btns">
+      <my-button
+          @click="$router.push(`/users/${post.id}`)"
+      >
+        Открыть
+      </my-button>
       <my-button
           @click="$emit('remove', post)"
       >

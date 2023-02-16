@@ -26,17 +26,24 @@
         @remove="removePost"
         v-if="!isPostLoading"
     />
+
     <div v-else>Идет загрузка...</div>
-    <div class="page__wrapper">
-      <div
-          class="page"
-          :class="{
-            'curent_page': page === pageNumber
-          }"
-          v-for="pageNumber in totalPages"
-          :key="pageNumber">{{ pageNumber }}
-      </div>
-    </div>
+    <!--    // подгрузка следующих элементов-->
+    <!--        ref="observer" -->
+    <div v-intersection="loadMorePosts" class="observer"></div>
+<!-- //Пагинация 1-->
+<!--    <div class="page__wrapper">-->
+<!--      <div-->
+<!--          v-for="pageNumber in totalPages"-->
+<!--          :key="pageNumber"-->
+<!--          class="page"-->
+<!--          :class="{-->
+<!--            'curent_page': page === pageNumber-->
+<!--          }"-->
+<!--          @click="changePage(pageNumber)"-->
+<!--      >{{ pageNumber }}-->
+<!--      </div>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -83,6 +90,10 @@ export default {
     showDialog() {
       this.dialogVisible = true
     },
+    // changePage(pageNumber){ //пагинация 1
+    //   this.page = pageNumber
+    //   this.fetchPosts()
+    // },
     async fetchPosts() {
       try {
         this.isPostLoading = true
@@ -101,10 +112,40 @@ export default {
       } finally {
         this.isPostLoading = false
       }
+    },
+    async loadMorePosts() {
+      try {
+        this.page +=1
+        const response = await axios.get('https://jsonplaceholder.typicode.com/posts',
+            {
+              params: {
+                _page: this.page,
+                _limit: this.limit
+              }
+            })
+        this.totalPages = Math.ceil(response.headers["x-total-count"] / this.limit)
+        this.posts = [...this.posts, ...response.data]
+      } catch (e) {
+        alert('error')
+      }
     }
   },
   mounted() {
     this.fetchPosts()
+
+    // const options = { // подгрузка следующих элементов
+    //   rootMargin: '8px',
+    //   threshold: 1.0
+    // }
+    //
+    // const callback = (entries) => {
+    //   if(entries[0].isIntersecting && this.page < this.totalPages) {
+    //     this.loadMorePosts()
+    //   }
+    // }
+    //
+    // const observer = new IntersectionObserver(callback, options)
+    // observer.observe(this.$refs.observer)
   },
   computed: {
     sortedPosts() {
@@ -125,11 +166,7 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+
 
 .container {
   width: 400px;
@@ -156,5 +193,8 @@ export default {
 .curent_page {
   border: 2px solid peru;
 }
-
+.observer{
+  height: 30px;
+  background: peru;
+}
 </style>
