@@ -3,38 +3,43 @@
 <!--      <h2>{{ $store.state.post.limit }}</h2>-->
 <!--      <h1>{{$store.state.likes}}</h1>-->
 <!--      <h1>{{$store.getters.doubleLikes}}</h1>-->
-        <div>
-          <my-button @click="$store.commit('incrementLikes')">+</my-button>
-          <my-button @click="$store.commit('decrementLikes')">-</my-button>
-        </div>
-      <h2>Страница</h2>
-<!--      <my-input v-model="searchQuery" placeholder="Поиск..."/>-->
+
+      <h2>Страница store</h2>
+      <my-input
+          :model-value="searchQuery"
+          @update:model-value="setSearchQuery"
+          placeholder="Поиск..."/>
       <div class="app_btns">
         <my-button
             @click="showDialog"
         >
           Создать пользователя
         </my-button>
-<!--        <my-select-->
-<!--            v-model="selectedSort"-->
-<!--            :options="sortOptions"-->
-<!--        >-->
-<!--        </my-select>-->
+        <my-select
+            :model-value="selectedSort"
+            @update:model-value = "setSelectedSort"
+            :options="sortOptions"
+        >
+        </my-select>
       </div>
 
-      <my-button @click="fetchPosts">Выгрузить</my-button>
+
 <!--      <my-dialog v-model:show="dialogVisible">-->
 <!--        <post-form-->
 <!--            @create="createPost"-->
 <!--        />-->
 <!--      </my-dialog>-->
-      <post-list
-          :posts="sortedAndSearchedPosts"
-          @remove="removePost"
-          v-if="!isPostLoading"
-      />
 
-      <div v-else>Идет загрузка...</div>
+    <post-list
+        :posts="sortedAndSearchedPosts"
+        @remove="removePost"
+        v-if="!isPostLoading"
+    />
+
+<!--          v-if="!isPostLoading"-->
+<!--      />-->
+
+<!--      <div v-else>Идет загрузка...</div>-->
 <!--      <div v-intersection="loadMorePosts" class="observer"></div>-->
 
   </div>
@@ -42,20 +47,25 @@
 
 <script>
 import {mapState, mapMutations, mapActions, mapGetters} from 'vuex'
+import PostList from "@/components/PostList";
 export default {
-  name: "VideoTest",
-
+  name: "PostElemWithStore",
   data() {
     return {
       dialogVisible: false
     }
   },
+  components:{
+    PostList
+  },
   methods: {
     ...mapMutations({
-      setPage: 'post/setPage'
+      setPage: 'post/setPage',
+      setSearchQuery: 'post/setSearchQuery',
+      setSelectedSort: 'post/setSelectedSort'
     }),
     ...mapActions({
-      loadMorePost: 'post/loadMorePosts',
+      loadMorePosts: 'post/loadMorePosts',
       fetchPosts: 'post/fetchPosts'
     }),
 

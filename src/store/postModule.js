@@ -45,6 +45,7 @@ export const postModule = {
     },
     actions: {
         async fetchPosts({state, commit}) {
+
             try {
                 commit('setLoading', true)
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts',
@@ -58,6 +59,7 @@ export const postModule = {
                 commit('setPosts', response.data)
 
             } catch (e) {
+                console.log(e)
                 alert('error')
             } finally {
                 commit('setLoading', false)
@@ -65,6 +67,7 @@ export const postModule = {
         },
         async loadMorePosts({state, commit}) {
             try {
+                console.log('sdzdzs')
                 commit('setPage', state.page +1)
                 const response = await axios.get('https://jsonplaceholder.typicode.com/posts',
                     {
@@ -76,6 +79,7 @@ export const postModule = {
                 commit('setTotalPages', Math.ceil(response.headers["x-total-count"] / state.limit))
                 commit('setPosts', [...state.posts, ...response.data])
             } catch (e) {
+                console.log(e)
                 alert('error')
             }
         }

@@ -4,6 +4,7 @@ import VideoTest from "@/components/VideoTest";
 import AboutUs from "@/pages/AboutUs";
 import PostElem from "@/pages/PostElem";
 import PostElemWithStore from "@/pages/PostElemWithStore";
+import CompositionPage from "@/pages/CompositionPage";
 
 
 const routes = [
@@ -27,6 +28,12 @@ const routes = [
         path: '/store',
         component: PostElemWithStore
     },
+
+    {
+        path: '/composition',
+        component: CompositionPage
+    },
+
 
 ]
 
